@@ -1,0 +1,17 @@
+---
+description: Core project context, always active
+alwaysApply: true
+---
+
+- This is Name Origins: a name etymology + cross-language cognate explorer.
+- Data is aggregated from Wikidata (graph backbone) + Behind the Name
+  (enrichment text) into our own Postgres. Never call either source from a
+  user-facing request path — reads only hit our DB.
+- MVP scope = etymological naming traditions only (Western/Biblical/
+  Greco-Roman-descended, plus Hebrew/Arabic/Sanskrit-rooted names where
+  covered). Compositional (Chinese/Japanese/Korean) and circumstantial
+  (Akan/Yoruba-style) traditions are out of scope — do not build features
+  or schema that quietly force-fit them into the etymological model. See
+  `cultural-scope.mdc`.
+- Prefer the simplest solution that fits current scale. Do not add
+  services/infra not already listed in `stack.mdc` without flagging it.

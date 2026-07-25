@@ -1,0 +1,20 @@
+---
+description: Wikidata + Behind the Name ingestion rules
+globs: ["**/etl/**", "**/ingest/**", "**/scripts/**", "**/*sparql*"]
+alwaysApply: false
+---
+
+- Wikidata SPARQL: filter `P31` to `Q202444`/`Q11879590`/`Q12308941`/
+  `Q3409032`. Use `P460` for cognates, `P1705` for native label, `P407`
+  for language. Public endpoint has a ~60s timeout — paginate, don't run
+  one giant query. Always send a descriptive `User-Agent`.
+- `P460` edges are informally sourced (per Wikidata's own editors) — tag
+  resulting relations `confidence = 'community'`, never present them in
+  the UI at the same certainty as Behind the Name text.
+- Run graph closure (BFS/union-find) over raw `P460` edges in the ETL
+  transform before writing to `name_relations`. The app must read an
+  already-closed graph — never compute closure at query time.
+- Behind the Name API: respect 2 req/sec / 400/hr / 4,000/day limits.
+  Always store `source` + `source_url` on `name_enrichments` rows.
+- Ingestion is a scheduled batch job, not on-demand/live. Don't add
+  request-time calls to either source anywhere in the app.

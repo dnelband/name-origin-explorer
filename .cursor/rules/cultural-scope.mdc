@@ -1,0 +1,18 @@
+---
+description: Cultural/naming-tradition scope rules
+globs: ["**/names/**", "**/db/**", "**/seed*/**"]
+alwaysApply: false
+---
+
+- Do not add compositional (Chinese/Japanese/Korean) or circumstantial
+  (Akan/Yoruba-style) name examples, seed data, or schema assumptions —
+  out of scope until a dedicated v2 data model exists.
+- Never hardcode "meaning" or "origin" as a single scalar assumption on a
+  name — use the `name_enrichments` per-source/per-field shape so this
+  stays extensible.
+- Keep the `tradition_type` column/value on `names`. Don't remove it even
+  though only `'etymological'` is populated now.
+- If a change touches which cultures/languages are represented (UI
+  defaults, examples, seed data), don't default to Western examples by
+  habit — but don't fabricate low-confidence coverage either. Flag the gap
+  in a comment instead of guessing.
