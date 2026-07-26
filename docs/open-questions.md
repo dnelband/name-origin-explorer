@@ -23,6 +23,6 @@ don't let an agent quietly pick one without flagging it back to you.
   manually corrected later. Not designed yet.
 
 - **Non-Western tradition expansion (post-MVP).** Deliberately out of
-  scope for now (see `.cursor/rules/02-cultural-scope.mdc`), but when it's
+  scope for now (see `.cursor/rules/cultural-scope.mdc`), but when it's
   picked up, it needs its own data-model design session — don't assume the
   current schema extends cleanly without rethinking it.

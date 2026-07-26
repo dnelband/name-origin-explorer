@@ -1,17 +1,20 @@
 ---
-description: Core project context, always active
+description: Core product context — what Name Origins is and isn't
 alwaysApply: true
 ---
 
-- This is Name Origins: a name etymology + cross-language cognate explorer.
-- Data is aggregated from Wikidata (graph backbone) + Behind the Name
-  (enrichment text) into our own Postgres. Never call either source from a
-  user-facing request path — reads only hit our DB.
-- MVP scope = etymological naming traditions only (Western/Biblical/
-  Greco-Roman-descended, plus Hebrew/Arabic/Sanskrit-rooted names where
-  covered). Compositional (Chinese/Japanese/Korean) and circumstantial
-  (Akan/Yoruba-style) traditions are out of scope — do not build features
-  or schema that quietly force-fit them into the etymological model. See
-  `cultural-scope.mdc`.
-- Prefer the simplest solution that fits current scale. Do not add
-  services/infra not already listed in `stack.mdc` without flagging it.
+# Name Origins
+
+- Etymology + cross-language cognate explorer.
+- Aggregate Wikidata (graph) + Behind the Name (enrichment) into our
+  Postgres. Never call either source from a user-facing request path —
+  reads hit our DB only.
+- MVP = etymological naming traditions only. Compositional (CJK) and
+  circumstantial (Akan/Yoruba-style) traditions are out of scope — see
+  `cultural-scope.mdc`. Do not force-fit them into the current model.
+- Prefer the simplest solution at current scale. Do not add services or
+  infra not listed in `stack.mdc` without flagging it.
+- Items in `docs/open-questions.md` are undecided. Do not silently pick
+  an answer in code — flag it in chat first.
+- Settled rationale lives in `docs/decisions-log.md`. Revisit only
+  deliberately, not by accident mid-build.

@@ -1,7 +1,7 @@
 -- Name Origins App — first-pass schema
 -- Not final. Treat as a starting point to run locally and iterate on.
--- See ../.cursor/rules/02-cultural-scope.mdc and 03-data-sources.mdc
--- for the reasoning behind specific columns below.
+-- See .cursor/rules/cultural-scope.mdc, data-sources.mdc, and
+-- schema-conventions.mdc for the reasoning behind specific columns.
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE EXTENSION IF NOT EXISTS "pgcrypto"; -- for gen_random_uuid()
@@ -17,7 +17,7 @@ CREATE TABLE names (
 
   -- Exists now so future non-etymological traditions (compositional,
   -- circumstantial) are additive, not a breaking migration.
-  -- See .cursor/rules/02-cultural-scope.mdc before changing this default
+  -- See .cursor/rules/cultural-scope.mdc before changing this default
   -- or adding logic that assumes 'etymological' is the only value.
   tradition_type TEXT NOT NULL DEFAULT 'etymological',
 

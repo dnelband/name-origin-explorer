@@ -1,0 +1,20 @@
+---
+description: Schema and data-model conventions
+globs: "**/db/**,**/drizzle/**,**/*schema*,**/migrations/**"
+alwaysApply: false
+---
+
+# Schema Conventions
+
+- Starting point: `db/schema.sql`. Treat it as a draft until migrated
+  into Drizzle; don't invent parallel shapes.
+- `name_enrichments`: one row per `(name_id, source, field)`. Attribution
+  (`source`, `source_url`) is required, not optional.
+- `name_relations`: store post-closure cognate edges only. Canonical
+  pair ordering (`name_a < name_b`) — ETL must sort before insert.
+- `confidence` on relations: `'community'` (Wikidata P460) vs
+  `'sourced'` (Behind the Name or similar). Preserve the distinction.
+- `tradition_type` stays on `names` for future non-etymological models —
+  see `cultural-scope.mdc` before changing the default or assuming
+  `'etymological'` is the only value.
+- App code reads via Drizzle only. Raw SQL belongs in migrations/seeds.

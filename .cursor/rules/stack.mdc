@@ -1,19 +1,20 @@
 ---
-description: Stack and conventions, always active
+description: Settled stack and hard constraints
 alwaysApply: true
 ---
 
-- Stack: Next.js 16, Postgres via Supabase, Drizzle ORM, Vercel hosting.
-- Search: `pg_trgm` only. Do not add Typesense/Meilisearch/Elastic without
-  explicit sign-off — not justified at current scale.
+# Stack
+
+- Next.js 16, Postgres via Supabase, Drizzle ORM, Vercel hosting.
+- Search: `pg_trgm` only. Do not add Typesense/Meilisearch/Elastic
+  without explicit sign-off.
 - Graph UI: react-flow for the cognate view.
-- Fonts via `next/font/google`: Inter as primary; load Noto Sans Hebrew /
-  Arabic / Devanagari only for scripts Inter doesn't cover, stacked via
-  CSS font-family fallback. Never bulk-load all Noto script families.
-- Testing: Playwright for E2E. Unit-test the ETL transform step
-  specifically — it's the most likely place to silently produce wrong
-  data.
-- All DB access through Drizzle, no raw SQL in app code outside
+- Fonts via `next/font/google`: Inter primary; load Noto Sans Hebrew /
+  Arabic / Devanagari only for scripts Inter doesn't cover, via CSS
+  font-family fallback. Never bulk-load all Noto script families.
+- Testing: Playwright for E2E. Unit-test the ETL transform step — it's
+  the most likely place to silently produce wrong data.
+- All DB access through Drizzle. No raw SQL in app code outside
   migrations/seeds.
 - Every enriched field traces to a `source` (and ideally `source_url`) —
-  don't write enrichment content without attribution.
+  never write enrichment content without attribution.

@@ -15,7 +15,7 @@ Compositional (Chinese/Japanese/Korean) and circumstantial (e.g. Akan,
 Yoruba) naming traditions are excluded from MVP — not due to a Western
 bias in intent, but because they don't fit the etymological data model and
 forcing them in would misrepresent them. Full reasoning in
-`.cursor/rules/02-cultural-scope.mdc`. Revisit as a proper v2 with its own
+`.cursor/rules/cultural-scope.mdc`. Revisit as a proper v2 with its own
 data model, not a patch to the current schema.
 
 ### Wikidata as backbone, Behind the Name as enrichment (not two
@@ -29,7 +29,7 @@ rather than picking one or awkwardly merging both for everything.
 Considered on-demand/grow-with-usage. Rejected because: storage is cheap
 at this data scale (~30-100MB estimate, non-issue), on-demand means poor
 first-search latency and rate-limit exposure, and the graph view needs to
-already be populated to be useful. See `.cursor/rules/03-data-sources.mdc`.
+already be populated to be useful. See `.cursor/rules/data-sources.mdc`.
 
 ### pg_trgm over a dedicated search service
 Typesense/Meilisearch would give nicer typo-tolerant search UX, but are
