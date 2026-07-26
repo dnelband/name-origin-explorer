@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: HomeProps) {
       {!dbConfigured && (
         <p className="border border-border bg-white/70 px-4 py-3 text-sm text-muted">
           Database not configured. Add{" "}
-          <code className="text-foreground">DATABASE_URL</code> to{" "}
+          <code className="text-foreground">POSTGRES_URL</code> to{" "}
           <code className="text-foreground">.env.local</code> to enable search.
         </p>
       )}

@@ -9,7 +9,9 @@
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:bootstrap": "tsx db/bootstrap.ts",
+    "db:seed": "tsx db/seed.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",

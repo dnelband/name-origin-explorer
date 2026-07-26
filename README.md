@@ -17,13 +17,13 @@ only reads our database.
 ```bash
 pnpm install
 cp .env.example .env.local
-# set DATABASE_URL to your Supabase Postgres connection string
+# Paste Vercel ↔ Supabase env vars into .env.local (POSTGRES_URL, etc.)
 ```
 
 Apply the first-pass SQL (extensions + tables + trigram index) once:
 
 ```bash
-psql "$DATABASE_URL" -f db/schema.sql
+pnpm db:bootstrap
 ```
 
 Then:
@@ -39,6 +39,8 @@ pnpm dev
 | `pnpm dev` | Local Next.js server |
 | `pnpm build` | Production build |
 | `pnpm lint` | ESLint |
+| `pnpm db:bootstrap` | Apply `db/schema.sql` (extensions + tables) |
+| `pnpm db:seed` | Insert a few sample names for local smoke tests |
 | `pnpm db:generate` | Generate Drizzle migrations from `db/schema.ts` |
 | `pnpm db:push` | Push Drizzle schema to the database |
 | `pnpm db:studio` | Drizzle Studio |
