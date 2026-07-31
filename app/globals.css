@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f5f4;
-  --foreground: #1c1917;
+  --background: #0a0f14;
+  --foreground: #e8eaed;
   --muted: #6b7280;
-  --border: #d9e0dc;
-  --accent: #0f3d3e;
+  --border: #1e2830;
+  --accent: #e8a838;
 }
 
 @theme inline {
@@ -17,11 +17,38 @@
   --font-sans: var(--font-inter), var(--font-noto-hebrew),
     var(--font-noto-arabic), var(--font-noto-devanagari), ui-sans-serif,
     system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), "Hiragino Mincho ProN",
+    "Songti SC", "Noto Serif CJK JP", ui-serif, Georgia, serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
 body {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, #e8efe9 0%, transparent 55%),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
+}
+
+@keyframes tree-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.tree-skeleton-pulse {
+  animation: tree-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-skeleton-pulse {
+    animation: none;
+    opacity: 0.55;
+  }
 }

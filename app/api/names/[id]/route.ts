@@ -1,0 +1,16 @@
+import { NextResponse } from "next/server";
+import { getNameDetail } from "@/lib/names";
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  const detail = await getNameDetail(id);
+
+  if (!detail) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(detail);
+}

@@ -15,6 +15,8 @@ export const names = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
     wikidataQid: text("wikidata_qid").unique(),
+    /** Stable Wiktionary rematch key, e.g. "en:edward". */
+    wiktionaryKey: text("wiktionary_key").unique(),
     label: text("label").notNull(),
     nativeLabel: text("native_label"),
     language: text("language"),
@@ -73,6 +75,35 @@ export const nameRelations = pgTable(
   ],
 );
 
+/** Directed etymological lineage (Wiktionary). child ← derived from ← parent. */
+export const nameLineage = pgTable(
+  "name_lineage",
+  {
+    childId: uuid("child_id")
+      .notNull()
+      .references(() => names.id, { onDelete: "cascade" }),
+    parentId: uuid("parent_id")
+      .notNull()
+      .references(() => names.id, { onDelete: "cascade" }),
+    relationType: text("relation_type").notNull().default("derived_from"),
+    confidence: text("confidence").notNull().default("sourced"),
+    source: text("source").notNull().default("wiktionary"),
+    sourceUrl: text("source_url"),
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.childId, table.parentId, table.relationType],
+    }),
+    check(
+      "name_lineage_no_self",
+      sql`${table.childId} <> ${table.parentId}`,
+    ),
+    index("idx_name_lineage_parent").on(table.parentId),
+    index("idx_name_lineage_child").on(table.childId),
+  ],
+);
+
 export type Name = typeof names.$inferSelect;
 export type NameEnrichment = typeof nameEnrichments.$inferSelect;
 export type NameRelation = typeof nameRelations.$inferSelect;
+export type NameLineage = typeof nameLineage.$inferSelect;

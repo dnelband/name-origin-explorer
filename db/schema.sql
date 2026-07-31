@@ -10,6 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto"; -- for gen_random_uuid()
 CREATE TABLE names (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   wikidata_qid TEXT UNIQUE,        -- e.g. "Q325872"; null if sourced elsewhere later
+  wiktionary_key TEXT UNIQUE,      -- e.g. "en:edward"; stable Wiktionary rematch
   label TEXT NOT NULL,             -- display form, e.g. "Maria"
   native_label TEXT,               -- original script, e.g. "Мария"
   language TEXT,                   -- from Wikidata P407 / Behind the Name usage tag
@@ -63,3 +64,20 @@ CREATE TABLE name_relations (
 );
 
 CREATE INDEX idx_name_relations_b ON name_relations (name_b);
+
+-- Directed etymological lineage from Wiktionary (not P460 cognates).
+-- child is derived from / diminutive of / variant of parent.
+CREATE TABLE name_lineage (
+  child_id UUID NOT NULL REFERENCES names(id) ON DELETE CASCADE,
+  parent_id UUID NOT NULL REFERENCES names(id) ON DELETE CASCADE,
+  -- 'derived_from' | 'diminutive_of' | 'variant_of'
+  relation_type TEXT NOT NULL DEFAULT 'derived_from',
+  confidence TEXT NOT NULL DEFAULT 'sourced',
+  source TEXT NOT NULL DEFAULT 'wiktionary',
+  source_url TEXT,
+  PRIMARY KEY (child_id, parent_id, relation_type),
+  CONSTRAINT name_lineage_no_self CHECK (child_id <> parent_id)
+);
+
+CREATE INDEX idx_name_lineage_parent ON name_lineage (parent_id);
+CREATE INDEX idx_name_lineage_child ON name_lineage (child_id);

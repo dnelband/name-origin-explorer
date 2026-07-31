@@ -12,8 +12,14 @@ alwaysApply: false
   (`source`, `source_url`) is required, not optional.
 - `name_relations`: store post-closure cognate edges only. Canonical
   pair ordering (`name_a < name_b`) — ETL must sort before insert.
-- `confidence` on relations: `'community'` (Wikidata P460) vs
-  `'sourced'` (Behind the Name or similar). Preserve the distinction.
+- `name_lineage`: directed etymology (`child_id` ← `parent_id`). Types:
+  `derived_from` | `diminutive_of` | `variant_of`. Source is Wiktionary
+  (`confidence = 'sourced'`). Do not store undirected cognates here.
+- `names.wiktionary_key`: stable rematch key (`lang:lemma`), unique when
+  set. May coexist with `wikidata_qid`.
+- `confidence` on cognate relations: `'community'` (Wikidata P460) vs
+  `'sourced'` (Behind the Name or Wiktionary lineage). Preserve the
+  distinction.
 - `tradition_type` stays on `names` for future non-etymological models —
   see `cultural-scope.mdc` before changing the default or assuming
   `'etymological'` is the only value.

@@ -8,10 +8,10 @@ don't let an agent quietly pick one without flagging it back to you.
   range? by offset? by language subsets run separately?) before the full
   ingestion script can be written.
 
-- **UX/presentation design of the cognate graph view.** react-flow is
-  chosen as the library, but the actual layout/interaction design (force
-  graph? tree layout? how deep does a "family tree" go before it's
-  unreadable?) is unsettled.
+- **UX/presentation design of the cognate graph view.** Settled for v1:
+  directed Wiktionary lineage tree (ancestors ↔ focus ↔ descendants);
+  landing rotates 5 etymological roots (see `docs/decisions-log.md`).
+  Later: radial tree, chord, atlas.
 
 - **ETL scheduling mechanism.** Options not yet compared: Vercel Cron,
   GitHub Actions on a schedule, Supabase scheduled functions. No strong

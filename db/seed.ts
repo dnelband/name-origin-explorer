@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { getDatabaseUrl } from "./env";
-import { nameEnrichments, nameRelations, names } from "./schema";
+import { nameEnrichments, nameLineage, nameRelations, names } from "./schema";
 
 config({ path: ".env.local" });
 
@@ -101,6 +101,26 @@ async function main() {
         ...pair(yusuf.id, joseph.id),
         relationType: "cognate",
         confidence: "community",
+      },
+    ]);
+
+    // Directed lineage (Wiktionary-style): Mary ← Maria ← Miriam
+    await db.insert(nameLineage).values([
+      {
+        childId: maria.id,
+        parentId: miriam.id,
+        relationType: "derived_from",
+        confidence: "sourced",
+        source: "wiktionary",
+        sourceUrl: "https://en.wiktionary.org/wiki/Maria",
+      },
+      {
+        childId: mary.id,
+        parentId: maria.id,
+        relationType: "derived_from",
+        confidence: "sourced",
+        source: "wiktionary",
+        sourceUrl: "https://en.wiktionary.org/wiki/Mary",
       },
     ]);
 

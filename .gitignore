@@ -35,6 +35,12 @@ yarn-error.log*
 .env*.local
 !.env.example
 
+# etl progress
+.etl-wikidata-progress.json
+
+# Wiktionary / kaikki dumps (large)
+/data/
+
 # vercel
 .vercel
 

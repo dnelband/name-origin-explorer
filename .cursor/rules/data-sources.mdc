@@ -1,5 +1,5 @@
 ---
-description: Wikidata + Behind the Name ingestion rules
+description: Wikidata + Behind the Name + Wiktionary ingestion rules
 globs: "**/etl/**,**/ingest/**,**/scripts/**,**/*sparql*"
 alwaysApply: false
 ---
@@ -12,11 +12,19 @@ alwaysApply: false
   giant query. Always send a descriptive `User-Agent`.
 - `P460` edges are informally sourced — tag resulting relations
   `confidence = 'community'`. Never present them in the UI at the same
-  certainty as Behind the Name text.
+  certainty as Behind the Name text. **Do not use P460 for the lineage
+  tree** — cognates stay in `name_relations` only.
 - Run graph closure (BFS/union-find) over raw `P460` edges in the ETL
   transform before writing to `name_relations`. The app reads an
   already-closed graph — never compute closure at query time.
+- Wiktionary (via Wiktextract/kaikki.org dumps): source of **directed**
+  lineage. Stream the dump; never call Wiktionary from the request path.
+  Extract given-name senses only. Edges from etymology templates
+  (`inh` / `bor` / `der`), `descendants`, gloss diminutives, and rare
+  `given name` `from=` / `dimof` / `varof` args → `name_lineage` with
+  `source = 'wiktionary'` and `source_url`. Skip Related terms /
+  Translations (cognates, not ancestry).
 - Behind the Name API: respect 2 req/sec / 400/hr / 4,000/day. Always
   store `source` + `source_url` on `name_enrichments` rows.
 - Ingestion is a scheduled batch job, not on-demand. Don't add
-  request-time calls to either source anywhere in the app.
+  request-time calls to any external source anywhere in the app.

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  Instrument_Serif,
   Inter,
   Noto_Sans_Arabic,
   Noto_Sans_Devanagari,
@@ -11,6 +12,13 @@ const inter = Inter({
   subsets: ["latin", "latin-ext", "greek", "cyrillic"],
   variable: "--font-inter",
   display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+  weight: "400",
 });
 
 const notoHebrew = Noto_Sans_Hebrew({
@@ -51,9 +59,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${notoHebrew.variable} ${notoArabic.variable} ${notoDevanagari.variable} h-full antialiased`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${notoHebrew.variable} ${notoArabic.variable} ${notoDevanagari.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="h-full font-sans">{children}</body>
     </html>
   );
 }

@@ -8,7 +8,8 @@ alwaysApply: true
 - Next.js 16, Postgres via Supabase, Drizzle ORM, Vercel hosting.
 - Search: `pg_trgm` only. Do not add Typesense/Meilisearch/Elastic
   without explicit sign-off.
-- Graph UI: react-flow for the cognate view.
+- Graph UI: horizontal lineage tree (custom SVG/HTML). react-flow was
+  tried and dropped for v1 — do not re-add without explicit sign-off.
 - Fonts via `next/font/google`: Inter primary; load Noto Sans Hebrew /
   Arabic / Devanagari only for scripts Inter doesn't cover, via CSS
   font-family fallback. Never bulk-load all Noto script families.

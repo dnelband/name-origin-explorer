@@ -6,9 +6,10 @@ alwaysApply: true
 # Name Origins
 
 - Etymology + cross-language cognate explorer.
-- Aggregate Wikidata (graph) + Behind the Name (enrichment) into our
-  Postgres. Never call either source from a user-facing request path —
-  reads hit our DB only.
+- Aggregate Wikidata (name inventory + optional cognates) + Wiktionary
+  (directed lineage) + Behind the Name (enrichment) into our Postgres.
+  Never call any source from a user-facing request path — reads hit our
+  DB only.
 - MVP = etymological naming traditions only. Compositional (CJK) and
   circumstantial (Akan/Yoruba-style) traditions are out of scope — see
   `cultural-scope.mdc`. Do not force-fit them into the current model.
